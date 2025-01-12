@@ -1,28 +1,25 @@
-
-
-
-
-
 // Conteneur où afficher les utilisateurs
 const userList = document.getElementById("user-list");
 
 // Fonction pour récupérer les données JSON
 async function fetchUsers() {
   try {
-    const response = await fetch("/DATA/data.json");
+    console.log("Fetching from:", "DATA/data.json"); // Vérifie l'URL
+    const response = await fetch("DATA/data.json"); // Récupère le fichier JSON
     if (!response.ok) {
-      throw new Error("Erreur lors de la récupération des données");
+      throw new Error(`Erreur lors de la récupération des données : ${response.status}`);
     }
     const data = await response.json(); // Convertit en JSON
     displayUsers(data); // Affiche les données
   } catch (error) {
-    console.error(error);
+    console.error("Erreur :", error.message);
     userList.innerHTML = "<p>Impossible de charger les données.</p>";
   }
 }
 
 // Fonction pour afficher les utilisateurs
 function displayUsers(users) {
+  userList.innerHTML = ""; // Réinitialise le contenu avant d'afficher
   users.forEach(user => {
     const userCard = document.createElement("div");
     userCard.className = "user-card";
@@ -40,4 +37,3 @@ function displayUsers(users) {
 
 // Appelle la fonction pour récupérer les données
 fetchUsers();
-
